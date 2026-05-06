@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Book Sprint — Ralph Publishers</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --gold-dark: #8B6914;
+    --red: #C0392B;
+    --red-dark: #922B21;
+    --black: #0A0A0A;
+    --black-soft: #111111;
+    --black-card: #161616;
+    --white: #FFFFFF;
+    --white-muted: #D9D9D9;
+    --gray: #888888;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Libre Baskerville', serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,10,0.95);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.4rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 8rem 2rem 4rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(135deg, rgba(192,57,43,0.15) 0%, transparent 50%),
+      linear-gradient(to bottom, transparent 60%, var(--black) 100%);
+    z-index: 0;
+  }
+
+  .hero-accent {
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--red), var(--gold), transparent);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-title .the {
+    font-size: 0.35em;
+    color: var(--gold);
+    display: block;
+    font-style: italic;
+    font-family: 'Libre Baskerville', serif;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.2em;
+  }
+
+  .hero-title .book { color: var(--white); display: block; }
+  .hero-title .sprint { color: var(--gold); display: block; }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--white-muted);
+    line-height: 1.7;
+    margin: 1.5rem 0 2rem;
+    font-style: italic;
+  }
+
+  .hero-sub strong {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; right: -4px;
+    width: 100%; height: 100%;
+    border: 2px solid var(--gold-dark);
+    z-index: -1;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translate(-2px, -2px); }
+  .btn-primary:hover::after { transform: translate(4px, 4px); }
+
+  .hero-note {
+    font-size: 0.75rem;
+    color: var(--gray);
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: var(--black-card);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.4rem;
+  }
+
+  .stat-number {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--white-muted);
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-image-placeholder {
+    grid-column: 2;
+    grid-row: 1;
+    background: var(--black-card);
+    border: 1px solid rgba(201,168,76,0.15);
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-image-placeholder::before {
+    content: 'YOUR PHOTO HERE';
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    color: rgba(201,168,76,0.3);
+    letter-spacing: 0.2em;
+  }
+
+  .hero-image-placeholder .red-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 6px;
+    background: var(--red);
+  }
+
+  /* PAIN SECTION */
+  .pain {
+    padding: 5rem 2rem;
+    background: var(--black-soft);
+    position: relative;
+  }
+
+  .pain::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .section-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .section-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title .gold { color: var(--gold); }
+
+  .pain-list {
+    list-style: none;
+    margin: 2rem 0;
+    text-align: left;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .pain-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: 1rem;
+    color: var(--white-muted);
+    line-height: 1.6;
+    padding: 1rem 1.2rem;
+    background: var(--black-card);
+    border-left: 3px solid var(--red);
+  }
+
+  .pain-list li::before {
+    content: '✗';
+    color: var(--red);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .pain-pivot {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-top: 2rem;
+    padding: 1.2rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    letter-spacing: 0.05em;
+  }
+
+  /* WHAT YOU GET */
+  .offer {
+    padding: 5rem 2rem;
+    background: var(--black);
+  }
+
+  .offer-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .offer-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1rem 1.2rem;
+    background: var(--black-card);
+    border: 1px solid rgba(201,168,76,0.15);
+    transition: border-color 0.2s;
+  }
+  .check-item:hover { border-color: rgba(201,168,76,0.4); }
+
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .check-icon::after {
+    content: '✓';
+    color: var(--black);
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .check-text {
+    font-size: 0.9rem;
+    color: var(--white-muted);
+    line-height: 1.5;
+  }
+
+  /* VALUE STACK */
+  .value-stack {
+    background: var(--black-card);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+
+  .value-stack::before {
+    content: 'WHAT THIS IS WORTH';
+    position: absolute;
+    top: -0.6rem;
+    left: 1.5rem;
+    background: var(--black-card);
+    padding: 0 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+
+  .value-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+  }
+
+  .value-row:last-child { border-bottom: none; }
+  .value-row .label { color: var(--white-muted); }
+  .value-row .amount { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--white); }
+  .value-row .amount.strike { text-decoration: line-through; color: var(--gray); }
+  .value-row .amount.gold { color: var(--gold); font-size: 1.1rem; }
+
+  .value-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--gold);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .value-total .label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--white);
+  }
+
+  .value-total .price {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .value-total .price span {
+    font-size: 1rem;
+    color: var(--white-muted);
+    font-weight: 400;
+  }
+
+  .per-week {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 0.5rem;
+  }
+
+  .per-week strong { color: var(--gold); }
+
+  /* JOURNEY */
+  .journey {
+    padding: 5rem 2rem;
+    background: var(--black-soft);
+    position: relative;
+  }
+
+  .journey::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--red), transparent);
+  }
+
+  .journey-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .months-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .month-card {
+    background: var(--black-card);
+    border: 1px solid rgba(201,168,76,0.15);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .month-header {
+    background: var(--red);
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .month-number {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: rgba(255,255,255,0.3);
+    line-height: 1;
+  }
+
+  .month-title-block .month-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .month-title-block .month-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  .month-body {
+    padding: 1.2rem;
+  }
+
+  .month-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    font-size: 0.82rem;
+    color: var(--white-muted);
+    line-height: 1.4;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .month-item:last-child { border-bottom: none; }
+
+  .month-item::before {
+    content: '→';
+    color: var(--gold);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* DIFFERENT */
+  .different {
+    padding: 5rem 2rem;
+    background: var(--black);
+  }
+
+  .different-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    text-align: left;
+  }
+
+  .diff-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1rem;
+    background: var(--black-card);
+    border-top: 2px solid var(--gold);
+  }
+
+  .diff-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: var(--gold);
+  }
+
+  .diff-text { font-size: 0.85rem; color: var(--white-muted); line-height: 1.5; }
+  .diff-text strong { color: var(--white); display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; margin-bottom: 0.2rem; }
+
+  /* PRICING */
+  .pricing {
+    padding: 5rem 2rem;
+    background: var(--black-soft);
+    position: relative;
+  }
+
+  .pricing::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .pricing-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  .pricing-card {
+    background: var(--black-card);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .pricing-card.featured {
+    border: 2px solid var(--gold);
+  }
+
+  .pricing-card.featured::before {
+    content: 'BEST VALUE';
+    position: absolute;
+    top: -0.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    padding: 0.2rem 0.8rem;
+    white-space: nowrap;
+  }
+
+  .pricing-card-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1rem;
+  }
+
+  .pricing-card-price {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 2.8rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .pricing-card-price sup {
+    font-size: 1.2rem;
+    vertical-align: super;
+  }
+
+  .pricing-card-sub {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 0.4rem;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .pricing-card-rand {
+    font-size: 0.85rem;
+    color: var(--white-muted);
+    margin-top: 0.3rem;
+    font-style: italic;
+  }
+
+  .pricing-guarantee {
+    font-size: 0.82rem;
+    color: var(--gray);
+    font-style: italic;
+    margin-top: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .pricing-guarantee strong { color: var(--white-muted); font-style: normal; }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 6rem 2rem;
+    background: var(--black);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: 'BOOK SPRINT';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(5rem, 15vw, 12rem);
+    color: rgba(201,168,76,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .cta-sub {
+    color: var(--white-muted);
+    font-style: italic;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+    font-size: 1rem;
+  }
+
+  .cta-details {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-detail {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .cta-detail strong { color: var(--gold); display: block; font-size: 0.9rem; }
+
+  .btn-cta-main {
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1.2rem 3rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    position: relative;
+    margin-bottom: 0.8rem;
+  }
+  .btn-cta-main:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .cta-cancel {
+    font-size: 0.75rem;
+    color: var(--gray);
+    font-family: 'Montserrat', sans-serif;
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-sub {
+    font-size: 0.75rem;
+    color: var(--gray);
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .tagline {
+    font-style: italic;
+    color: rgba(201,168,76,0.5);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-image-placeholder { display: none; }
+    .checklist { grid-template-columns: 1fr; }
+    .months-grid { grid-template-columns: 1fr; }
+    .diff-grid { grid-template-columns: 1fr; }
+    .pricing-cards { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-content > * {
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .hero-content > *:nth-child(1) { animation-delay: 0.1s; opacity: 0; }
+  .hero-content > *:nth-child(2) { animation-delay: 0.3s; opacity: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Ralph Publishers</div>
+  <a href="#secure" class="nav-cta">Secure Your Spot</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-tag">3-Month Intensive · Kicks Off May 30, 2026 · Online via Zoom</div>
+      <h1 class="hero-title">
+        <span class="the">The</span>
+        <span class="book">Book</span>
+        <span class="sprint">Sprint</span>
+      </h1>
+      <p class="hero-sub">
+        You come in with an idea.<br>
+        You leave with a <strong>complete manuscript</strong> — and the credibility no social media post will ever give you.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#secure" class="btn-primary">Secure Your Spot — Limited to 12</a>
+        <span class="hero-note">Every Wednesday · 7:00 PM SAST · Kicks off May 30 · First Wednesday session June 4</span>
+      </div>
+      <div class="hero-stats" style="margin-top:2.5rem;">
+        <div class="stat-card">
+          <div class="stat-number">12</div>
+          <div class="stat-label">Weekly Live Sessions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Months to Manuscript</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Complete First Draft</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">12</div>
+          <div class="stat-label">Spots Available</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image-placeholder">
+      <div class="red-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain">
+  <div class="section-inner">
+    <div class="section-tag">Sound Familiar?</div>
+    <h2 class="section-title">You Have A Book In You.<br><span class="gold">It's Still Not Written.</span></h2>
+    <p style="color:var(--white-muted); font-style:italic; line-height:1.8; margin-bottom:1.5rem;">
+      It's not because you lack the expertise. It's not because you lack the ideas. It's because every time you sit down to write, this happens:
+    </p>
+    <ul class="pain-list">
+      <li>The blank page wins and you close the laptop telling yourself you'll start tomorrow</li>
+      <li>You've been "working on it" for months — maybe years — with nothing to show</li>
+      <li>Life gets in the way and the book keeps getting pushed to the back of the list</li>
+      <li>You're writing alone with no structure, no accountability, no one to keep you moving</li>
+      <li>You know your book would establish you as the go-to expert — but it's still in your head</li>
+    </ul>
+    <div class="pain-pivot">
+      Book Sprint exists for exactly this moment. And it ends here.
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section class="offer">
+  <div class="offer-inner">
+    <div class="offer-header">
+      <div class="section-tag">The Book Sprint Package</div>
+      <h2 class="section-title">Everything You Get.<br><span class="gold">Nothing You Don't.</span></h2>
+    </div>
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">12 weekly live Zoom sessions — every Wednesday at 7:00 PM SAST</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">A clear chapter-by-chapter writing framework you can follow from day one</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">Weekly accountability — no week is ever wasted, no chapter left behind</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">A small committed group of coaches and leaders writing alongside you</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">Direct access to a ghostwriter and publisher every step of the way</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">Mid-cohort 1:1 session with Ralph personally — tailored to your manuscript</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">Author brand setup on LinkedIn — attract premium clients while you write</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">A complete first draft manuscript by July — ready for editing and publishing</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">Client attraction strategy — turn your book into a lead generation machine</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"></div>
+        <div class="check-text">Publishing roadmap — your personalised next steps to get your book into the world</div>
+      </div>
+    </div>
+
+    <div class="value-stack">
+      <div class="value-row">
+        <span class="label">1:1 Ghostwriting (market rate)</span>
+        <span class="amount strike">R15,000+</span>
+      </div>
+      <div class="value-row">
+        <span class="label">1:1 Book Coaching · 12 sessions at R2,200/hr</span>
+        <span class="amount strike">R26,400</span>
+      </div>
+      <div class="value-row">
+        <span class="label">LinkedIn Author Brand Setup</span>
+        <span class="amount strike">R5,000</span>
+      </div>
+      <div class="value-row">
+        <span class="label">Publishing Consultation</span>
+        <span class="amount strike">R2,200</span>
+      </div>
+      <div class="value-row">
+        <span class="label">Total Value</span>
+        <span class="amount gold">R48,600+</span>
+      </div>
+      <div class="value-total">
+        <span class="label">Your Investment Today</span>
+        <div>
+          <div class="price"><sup>$</sup>295 <span style="font-size:1rem;">/ R5,000</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="per-week">That's <strong>R417 per week</strong> to finally finish your book — with a ghostwriter and publisher beside you the whole way.</p>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="journey">
+  <div class="journey-inner">
+    <div style="text-align:center; margin-bottom:1rem;">
+      <div class="section-tag">Your 3-Month Journey</div>
+      <h2 class="section-title">From Idea to <span class="gold">Published Author</span></h2>
+    </div>
+    <div class="months-grid">
+      <div class="month-card">
+        <div class="month-header">
+          <div class="month-number">01</div>
+          <div class="month-title-block">
+            <div class="month-label">Month One</div>
+            <div class="month-name">Clarity &amp; Structure</div>
+          </div>
+        </div>
+        <div class="month-body">
+          <div class="month-item">Lock your book idea into one powerful sentence</div>
+          <div class="month-item">Define your reader with precision</div>
+          <div class="month-item">Build your complete chapter outline</div>
+          <div class="month-item">Set a writing schedule that works around your life</div>
+          <div class="month-item">Begin your author brand on LinkedIn</div>
+        </div>
+      </div>
+      <div class="month-card">
+        <div class="month-header">
+          <div class="month-number">02</div>
+          <div class="month-title-block">
+            <div class="month-label">Month Two</div>
+            <div class="month-name">Writing &amp; Brand</div>
+          </div>
+        </div>
+        <div class="month-body">
+          <div class="month-item">Write chapter by chapter in live sessions</div>
+          <div class="month-item">Weekly accountability — no week is wasted</div>
+          <div class="month-item">Mid-cohort 1:1 session with Ralph</div>
+          <div class="month-item">Position your book to attract premium clients</div>
+          <div class="month-item">Build your LinkedIn presence as a thought leader</div>
+        </div>
+      </div>
+      <div class="month-card">
+        <div class="month-header">
+          <div class="month-number">03</div>
+          <div class="month-title-block">
+            <div class="month-label">Month Three</div>
+            <div class="month-name">Completion &amp; Launch</div>
+          </div>
+        </div>
+        <div class="month-body">
+          <div class="month-item">Complete and refine your manuscript</div>
+          <div class="month-item">Full publishing consultation — Amazon, Takealot &amp; beyond</div>
+          <div class="month-item">Client attraction strategy using your book</div>
+          <div class="month-item">LinkedIn growth plan — book as lead machine</div>
+          <div class="month-item">Personalised publishing roadmap</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUEST EXPERTS -->
+<section style="padding:5rem 2rem; background:var(--black-card); position:relative;">
+  <div style="position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right, transparent, var(--gold), transparent);"></div>
+  <div style="max-width:800px; margin:0 auto; text-align:center;">
+    <div class="section-tag">Exclusive to Book Sprint Members</div>
+    <h2 class="section-title">Guest Expert <span class="gold">Sessions</span></h2>
+    <p style="color:var(--white-muted); font-style:italic; margin-bottom:3rem; line-height:1.8;">Book Sprint doesn't just help you write your book. It prepares you to take it into the world.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; text-align:left;">
+      <div style="background:var(--black); border:1px solid rgba(201,168,76,0.2); overflow:hidden;">
+        <div style="background:var(--red); padding:1rem 1.2rem;">
+          <div style="font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:0.3rem;">Bonus Session 01</div>
+          <div style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:1rem; color:var(--white); text-transform:uppercase;">Speaking for Authors</div>
+        </div>
+        <div style="padding:1.5rem 1.2rem;">
+          <p style="color:var(--white-muted); font-size:0.88rem; line-height:1.7; margin-bottom:1rem;">Your book opens doors. This session makes sure you walk through them with confidence.</p>
+          <p style="color:var(--white-muted); font-size:0.85rem; line-height:1.7;">How to prepare for <strong style="color:var(--gold);">interviews, podcasts, and public speaking</strong> to market your book and build your authority.</p>
+        </div>
+      </div>
+      <div style="background:var(--black); border:1px solid rgba(201,168,76,0.2); overflow:hidden;">
+        <div style="background:var(--red); padding:1rem 1.2rem;">
+          <div style="font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:0.3rem;">Bonus Session 02</div>
+          <div style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:1rem; color:var(--white); text-transform:uppercase;">Burnout & the Leader</div>
+        </div>
+        <div style="padding:1.5rem 1.2rem;">
+          <p style="color:var(--white-muted); font-size:0.88rem; line-height:1.7; margin-bottom:1rem;">Writing a book while running a business is a marathon. This session makes sure you finish it without burning out.</p>
+          <p style="color:var(--white-muted); font-size:0.85rem; line-height:1.7;">How to <strong style="color:var(--gold);">protect your energy and stay consistent</strong> as a leader who writes.</p>
+        </div>
+      </div>
+      <div style="background:var(--black); border:1px solid rgba(201,168,76,0.2); overflow:hidden;">
+        <div style="background:var(--red); padding:1rem 1.2rem;">
+          <div style="font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:0.3rem;">Bonus Session 03</div>
+          <div style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:1rem; color:var(--white); text-transform:uppercase;">Intellectual Property for Authors</div>
+        </div>
+        <div style="padding:1.5rem 1.2rem;">
+          <p style="color:var(--white-muted); font-size:0.88rem; line-height:1.7; margin-bottom:1rem;">Your book is more than a manuscript — it's an asset. This session makes sure it's protected.</p>
+          <p style="color:var(--white-muted); font-size:0.85rem; line-height:1.7;">Everything you need to know about <strong style="color:var(--gold);">copyright, IP law, and protecting your work</strong> as a published author.</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2rem; padding:1.2rem; border:1px solid rgba(201,168,76,0.2); background:var(--black);">
+      <p style="font-family:'Montserrat',sans-serif; font-size:0.8rem; color:var(--gold); font-weight:700; letter-spacing:0.05em;">3 exclusive expert sessions included at no extra cost. Guest speakers to be announced.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENT -->
+<section class="different">
+  <div class="different-inner">
+    <div class="section-tag">Why Book Sprint</div>
+    <h2 class="section-title">What Makes This <span class="gold">Different</span></h2>
+    <div class="diff-grid">
+      <div class="diff-item">
+        <div class="diff-icon">12</div>
+        <div class="diff-text"><strong>Small Group — Never Lost</strong>Limited to 12 participants. You get real attention, real feedback, real relationships.</div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">ZA</div>
+        <div class="diff-text"><strong>Built for African Leaders</strong>By a South African ghostwriter and publisher who understands your market and your story.</div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">✓</div>
+        <div class="diff-text"><strong>Live Weekly Sessions</strong>Not a course you watch alone at midnight. A real room of people finishing their books together.</div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">→</div>
+        <div class="diff-text"><strong>Ghostwriter-Led</strong>Not just a coach. A ghostwriter and publisher who has walked this road with dozens of authors.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="secure">
+  <div class="pricing-inner">
+    <div class="section-tag">Investment</div>
+    <h2 class="section-title">Choose Your <span class="gold">Payment Plan</span></h2>
+    <p style="color:var(--white-muted); font-style:italic; margin-top:0.5rem; font-size:0.9rem;">Same experience. Same access. Same result. Just different payment timing.</p>
+
+    <div style="max-width:420px; margin:2.5rem auto;">
+      <div class="pricing-card featured" style="padding:2.5rem 2rem;">
+        <div class="pricing-card-label">Once Off — Full Investment</div>
+        <div class="pricing-card-price"><sup>$</sup>295</div>
+        <div class="pricing-card-sub">one-time payment</div>
+        <div class="pricing-card-rand">≈ R5,000</div>
+        <div style="margin-top:1rem; font-size:0.8rem; color:var(--gold); font-family:'Montserrat',sans-serif; font-weight:700;">12 sessions · Guest experts included · Full access</div>
+        <a href="https://buy.stripe.com/fZu7sN4Zq7yV51VdzGasg0e" class="btn-cta-main" style="width:100%; text-align:center; margin-top:1.5rem; display:block; padding:1rem;">Secure Your Spot Now →</a>
+        <div style="margin-top:0.8rem; font-size:0.72rem; color:var(--gray); font-family:'Montserrat',sans-serif;">Cancel anytime · No questions asked</div>
+      </div>
+    </div>
+
+    <p class="pricing-guarantee" style="margin-top:2rem;">
+      <strong>The Guarantee:</strong> Show up every Wednesday, follow the framework, and do the work between sessions — and you will finish with a complete first draft. That is the promise.
+    </p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-title">Your Book Won't<br><span style="color:var(--gold)">Write Itself.</span></h2>
+    <p class="cta-sub">
+      Another year will pass. Another excuse will come. Or you join Book Sprint in May and by July you have a complete manuscript in your hands — the credential no one can take from you.
+    </p>
+    <div class="cta-details">
+      <div class="cta-detail"><strong>May 30, 2026</strong>Kick Off</div>
+      <div class="cta-detail"><strong>Every Wednesday</strong>7:00 PM SAST</div>
+      <div class="cta-detail"><strong>12 Spots</strong>Limited Group</div>
+      <div class="cta-detail"><strong>3 Months</strong>June to August</div>
+    </div>
+    <a href="https://buy.stripe.com/fZu7sN4Zq7yV51VdzGasg0e" class="btn-cta-main">Join Book Sprint — Secure Your Spot</a>
+    <span class="cta-cancel">Limited to 12 · Cancel anytime · No questions asked</span>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="padding:5rem 2rem; background:var(--black-soft); position:relative;">
+  <div style="position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right, transparent, var(--gold), transparent);"></div>
+  <div style="max-width:1000px; margin:0 auto; text-align:center;">
+    <div class="section-tag">What People Are Saying</div>
+    <h2 class="section-title">Words From Our <span class="gold">Community</span></h2>
+    <div style="margin-top:2.5rem;">
+      <iframe id='testimonialto-aa77930a-905d-4d30-abfb-58d16b76235d' src="https://embed-v2.testimonial.to/w/ralph-publishers?id=aa77930a-905d-4d30-abfb-58d16b76235d" frameborder="0" scrolling="no" width="100%" height="800px"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Ralph Publishers</div>
+  <div class="footer-sub">353 Festival Street, Hatfield, Pretoria · +27 67 829 1677</div>
+  <div class="tagline">We start in May. We finish together.</div>
+</footer>
+
+</body>
+</html>
